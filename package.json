@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/MalakaDeSilva/picaroon-payroll#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+     "cors": "^2.8.5",
+    "http": "0.0.1-security"
   },
   "devDependencies": {
     "dotenv": "^10.0.0"
