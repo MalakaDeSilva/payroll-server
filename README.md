@@ -9,6 +9,13 @@ In the project directory, you can run:
 
 Runs the app in the development mode.
 
+# Endpoints
+
+* https://picaroon-payroll-server.herokuapp.com/employees/ - GET (get all employees)
+* https://picaroon-payroll-server.herokuapp.com/employees/{employeeId} - GET (get one employee)
+* https://picaroon-payroll-server.herokuapp.com/employees/ - POST (store employee)
+* https://picaroon-payroll-server.herokuapp.com/employees/ - PUT (update employee) 
+
 # Important
 
 ## Adding new features
