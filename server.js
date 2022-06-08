@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
+const employeeRoutes = require("./api/routes/employee.controller");
 const designationRoutes = require("./api/routes/designation.controller");
 const fixedCommissionRoutes = require("./api/routes/fixed.commission.controller");
 const perUnitCommissionRoutes = require("./api/routes/per.unit.commission.controller");
