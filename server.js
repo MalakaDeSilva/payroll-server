@@ -6,7 +6,7 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const employeeRoutes = require("./api/routes/employeeController");
+const designationRoutes = require("./api/routes/designation.controller");
 
 const PORT = process.env.PORT || 8080;
 mongoose.connect(process.env.URI, {
@@ -27,6 +27,7 @@ const http = require("http");
 const server = http.Server(app);
 
 app.use("/employees", employeeRoutes);
+app.use("/designations", designationRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found.");
