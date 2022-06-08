@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const designationRoutes = require("./api/routes/designation.controller");
+const fixedCommissionRoutes = require("./api/routes/fixed.commission.controller");
 
 const PORT = process.env.PORT || 8080;
 mongoose.connect(process.env.URI, {
@@ -28,6 +29,7 @@ const server = http.Server(app);
 
 app.use("/employees", employeeRoutes);
 app.use("/designations", designationRoutes);
+app.use("/fixed-commissions", fixedCommissionRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found.");
