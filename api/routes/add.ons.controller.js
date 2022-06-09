@@ -4,7 +4,6 @@ const mongoose = require("mongoose");
 const router = express.Router();
 
 const AddOns = require("../model/add.ons");
-const metadataHelper = require("../util/metadata.helper");
 
 router.get("/:id", (req, res, next) => {
   const id = req.params.id;
@@ -47,11 +46,11 @@ router.post("/", (req, res, next) => {
     fixedAllowance: req.body.fixedAllowance,
   });
 
-  increment
+  addOn
     .save()
     .then((result) => {
       res.status(200).json({
-        createdIncrement: result,
+        createdAddOn: result,
       });
     })
     .catch((err) => {
@@ -73,7 +72,9 @@ router.put("/:id", (req, res, next) => {
   addOns
     .findOneAndUpdate(query, addOns)
     .then((result) => {
-      res.status(200).json(result);
+      res.status(200).json({
+        updatedAddOn: result,
+      });
     })
     .catch((err) => {
       res.status(500).json({ error: err });
