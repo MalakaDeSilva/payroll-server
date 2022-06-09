@@ -42,9 +42,9 @@ router.get("/", (req, res, next) => {
 router.post("/", (req, res, next) => {
   var commission = new Commission({
     _id: new mongoose.Types.ObjectId(),
-    commissionName: req.body.code,
-    amount: req.body.name,
-    employee: req.body.payRange,
+    commissionName: req.body.name,
+    amount: req.body.amount,
+    employee: req.body.employee,
     payCycle: metadataHelper.getPayCycle(req.body.payCycle),
   });
 
@@ -66,9 +66,9 @@ router.put("/:id", (req, res, next) => {
   };
 
   var commission = new Commission({
-    commissionName: req.body.code,
-    amount: req.body.name,
-    employee: req.body.payRange,
+    commissionName: req.body.name,
+    amount: req.body.amount,
+    employee: req.body.employee,
     payCycle: metadataHelper.getPayCycle(req.body.payCycle),
   });
 
