@@ -4,84 +4,70 @@ const mongoose = require("mongoose");
 const router = express.Router();
 
 const Employee = require("../model/employee");
+const employeeService = require("../service/employee.service");
 
-router.get("/:employeeId", (req, res, next) => {
-  const id = req.params.employeeId;
-  Employee.findById(id)
-    .exec()
-    .then((doc) => {
-      if (doc) {
-        res.status(200).json(doc);
-      } else {
-        res
-          .status(404)
-          .json({ message: "No valid entry found for the provided ID." });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-    });
+router.get("/:id", async (req, res, next) => {
+  const id = req.params.id;
+  let result = await employeeService.getEmployeeById(id);
+  if (result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
 });
 
-router.get("/", (req, res, next) => {
-  Employee.find()
-    .exec()
-    .then((doc) => {
-      if (doc) {
-        res.status(200).json(doc);
-      } else {
-        res.status(404).json({ message: "No valid entries found" });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-    });
+router.get("/", async (req, res, next) => {
+  let result = await employeeService.getEmployees();
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
   var employee = new Employee({
     _id: new mongoose.Types.ObjectId(),
+    employeeId: req.body.employeeId,
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,
     NIC: req.body.nic,
-    employeeType: req.body.type,
+    designation: req.body.designation,
   });
 
-  employee
-    .save()
-    .then((result) => {
-      console.log(result);
-    })
-    .catch((err) => {
-      console.log(err);
+  let result = await employeeService.addEmployee(employee);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json({
+      createdEmployee: result,
     });
-
-  res.status(200).json({
-    createdEmployee: employee,
-  });
+  }
 });
 
-router.put("/:employeeId", (req, res, next) => {
-  var query = {
-    _id: req.params.employeeId,
-  };
+router.put("/:id", async (req, res, next) => {
+  let _id = req.params.id;
 
   var employee = new Employee({
+    employeeId: req.body.employeeId,
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,
     NIC: req.body.nic,
-    employeeType: req.body.type,
+    designation: req.body.designation,
+    status: req.body.status,
   });
 
-  Employee.findOneAndUpdate(query, employee)
-    .then((employee) => {
-      res.status(200).json(employee);
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
+  let result = await employeeService.updateEmployee(employee, _id);
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json({
+      updatedEmployee: result,
     });
+  }
 });
 
 module.exports = router;

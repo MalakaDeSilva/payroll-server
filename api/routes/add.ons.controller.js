@@ -4,81 +4,62 @@ const mongoose = require("mongoose");
 const router = express.Router();
 
 const AddOns = require("../model/add.ons");
+const addOnsService = require("../service/add.ons.service");
 
-router.get("/:id", (req, res, next) => {
-  const id = req.params.id;
-  AddOns.findById(id)
-    .exec()
-    .then((doc) => {
-      if (doc) {
-        res.status(200).json(doc);
-      } else {
-        res
-          .status(404)
-          .json({ message: "No valid entry found for the provided ID." });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-    });
+router.get("/:empId", async (req, res, next) => {
+  const empId = req.params.empId;
+  let result = await addOnsService.getAddOnsByEmployeeId(empId);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
 });
 
-router.get("/", (req, res, next) => {
-  AddOns.find()
-    .exec()
-    .then((doc) => {
-      if (doc) {
-        res.status(200).json(doc);
-      } else {
-        res.status(404).json({ message: "No valid entries found" });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-    });
+router.get("/", async (req, res, next) => {
+  let result = await addOnsService.getAddOns();
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
   var addOn = new AddOns({
-    _id: new mongoose.Types.ObjectId(),
-    employee: req.body.employeeId,
+    employeeId: req.body.employeeId,
     increment: req.body.increment,
     fixedAllowance: req.body.fixedAllowance,
+    fromPayCycle: req.body.fromPayCycle,
   });
 
-  addOn
-    .save()
-    .then((result) => {
-      res.status(200).json({
-        createdAddOn: result,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  let result = await addOnsService.createUpdateAddOns(addOn, req.body.employeeId);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
 });
 
-router.put("/:id", (req, res, next) => {
-  var query = {
-    _id: req.params.id,
-  };
+router.put("/", async (req, res, next) => {
 
-  var addOns = new AddOns({
-    employee: req.body.employeeId,
+  var addOn = new AddOns({
+    employeeId: req.body.employeeId,
     increment: req.body.increment,
     fixedAllowance: req.body.fixedAllowance,
+    fromPayCycle: req.body.fromPayCycle,
   });
 
-  addOns
-    .findOneAndUpdate(query, addOns)
-    .then((result) => {
-      res.status(200).json({
-        updatedAddOn: result,
-      });
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-    });
+  let result = await addOnsService.createUpdateAddOns(addOn, req.body.employeeId);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
 });
 
 module.exports = router;

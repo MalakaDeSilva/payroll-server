@@ -5,80 +5,70 @@ const router = express.Router();
 
 const Commission = require("../model/fixed.commission");
 const metadataHelper = require("../util/metadata.helper");
+const commissionService = require("../service/fixed.commission.service");
 
-router.get("/:id", (req, res, next) => {
-  const id = req.params.id;
-  Commission.findById(id)
-    .exec()
-    .then((doc) => {
-      if (doc) {
-        res.status(200).json(doc);
-      } else {
-        res
-          .status(404)
-          .json({ message: "No valid entry found for the provided ID." });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-    });
+router.get("/:empId/:payCycle", async (req, res, next) => {
+  const empId = req.params.empId;
+  const payCycle = req.params.payCycle;
+
+  let result = await commissionService.getCommissionByEmployeePayCycle(
+    empId,
+    payCycle
+  );
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
 });
 
-router.get("/", (req, res, next) => {
-  Commission.find()
-    .exec()
-    .then((doc) => {
-      if (doc) {
-        res.status(200).json(doc);
-      } else {
-        res.status(404).json({ message: "No valid entries found" });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-    });
+router.get("/:payCycle", async (req, res, next) => {
+  const payCycle = req.params.payCycle;
+  let result = await commissionService.getCommissionsByPayCyle(payCycle);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
   var commission = new Commission({
     _id: new mongoose.Types.ObjectId(),
     commissionName: req.body.name,
     amount: req.body.amount,
-    employee: req.body.employee,
+    employeeId: req.body.employeeId,
     payCycle: metadataHelper.getPayCycle(req.body.payCycle),
   });
 
-  commission
-    .save()
-    .then((result) => {
-      res.status(200).json({
-        createdCommission: result,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+  let result = await commissionService.addCommission(commission);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json({ createdCommission: result });
+  }
 });
 
-router.put("/:id", (req, res, next) => {
-  var query = {
-    _id: req.params.id,
-  };
+router.put("/:id", async (req, res, next) => {
+  let id = req.params.id;
 
   var commission = new Commission({
     commissionName: req.body.name,
     amount: req.body.amount,
-    employee: req.body.employee,
+    employeeId: req.body.employeeId,
     payCycle: metadataHelper.getPayCycle(req.body.payCycle),
   });
 
-  commission.findOneAndUpdate(query, commission)
-    .then((result) => {
-      res.status(200).json(result);
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-    });
+  let result = await commissionService.updateCommission(commission, id);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json({ updatedCommission: result });
+  }
 });
 
 module.exports = router;

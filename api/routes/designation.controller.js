@@ -4,41 +4,30 @@ const mongoose = require("mongoose");
 const router = express.Router();
 
 const Designation = require("../model/designation");
+const designationService = require("../service/designation.service");
 
-router.get("/:id", (req, res, next) => {
-  const id = req.params.id;
-  Designation.findById(id)
-    .exec()
-    .then((doc) => {
-      if (doc) {
-        res.status(200).json(doc);
-      } else {
-        res
-          .status(404)
-          .json({ message: "No valid entry found for the provided ID." });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-    });
+router.get("/", async (req, res, next) => {
+  let result = await designationService.getDesignations();
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
 });
 
-router.get("/", (req, res, next) => {
-  Designation.find()
-    .exec()
-    .then((doc) => {
-      if (doc) {
-        res.status(200).json(doc);
-      } else {
-        res.status(404).json({ message: "No valid entries found" });
-      }
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
-    });
+router.get("/:code", async (req, res, next) => {
+  const desigCode = req.params.code;
+  let result = await designationService.getDesignationByCode(desigCode);
+  
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
 });
 
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
   var designation = new Designation({
     _id: new mongoose.Types.ObjectId(),
     designationCode: req.body.code,
@@ -46,36 +35,35 @@ router.post("/", (req, res, next) => {
     payRange: req.body.payRange,
   });
 
-  designation
-    .save()
-    .then((result) => {
-      res.status(200).json({
-        createdDesignation: result,
-      });
-    })
-    .catch((err) => {
-      console.log(err);
+  let result = await designationService.addDesignation(designation);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json({
+      createdDesignation: result,
     });
+  }
 });
 
-router.put("/:id", (req, res, next) => {
-  var query = {
-    _id: req.params.id,
-  };
-
+router.put("/:id", async (req, res, next) => {
   var designation = new Designation({
     designationCode: req.body.code,
     designationName: req.body.name,
     payRange: req.body.payRange,
   });
 
-  Designation.findOneAndUpdate(query, designation)
-    .then((result) => {
-      res.status(200).json(result);
-    })
-    .catch((err) => {
-      res.status(500).json({ error: err });
+  let result = await designationService.updateDesignation(
+    designation,
+    req.params.id
+  );
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json({
+      updatedDesignation: result,
     });
+  }
 });
 
 module.exports = router;
