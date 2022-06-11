@@ -16,7 +16,7 @@ const commissionSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    employee: {
+    employeeId: {
       type: String,
       required: true,
     },
