@@ -14,6 +14,10 @@ const addOnsSchema = mongoose.Schema(
     fixedAllowance: {
       type: Number,
     },
+    fromPayCycle: {
+      type: String,
+      required: true,
+    },
   },
   { timestamps: true }
 );
