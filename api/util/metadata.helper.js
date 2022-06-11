@@ -1,4 +1,4 @@
-export function getPayCycle(payCycle = "") {
+function getPayCycle(payCycle = "") {
   let d = new Date();
 
   const monthCodes = [
@@ -22,3 +22,7 @@ export function getPayCycle(payCycle = "") {
 
   return payCycle == "" ? code : payCycle;
 }
+
+module.exports = {
+  getPayCycle,
+};
