@@ -19,6 +19,26 @@ function getAddOnsByEmployeeId(employeeId) {
     });
 }
 
+function getAddOnsByEmployeeIdPayCycle(employeeId, fromPayCycle) {
+  let query = {
+    employeeId,
+    fromPayCycle,
+  };
+
+  return AddOns.find(query)
+    .exec()
+    .then((doc) => {
+      if (doc) {
+        return doc;
+      } else {
+        return { message: "No valid entry found for the provided ID." };
+      }
+    })
+    .catch((err) => {
+      return { error: err };
+    });
+}
+
 function getAddOns() {
   return AddOns.find()
     .exec()

@@ -17,6 +17,19 @@ router.get("/:empId", async (req, res, next) => {
   }
 });
 
+router.get("/:empId/:payCycle", async (req, res, next) => {
+  const empId = req.params.empId;
+  const payCycle = req.params.payCycle;
+  
+  let result = await addOnsService.getAddOnsByEmployeeId(empId);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
+});
+
 router.get("/", async (req, res, next) => {
   let result = await addOnsService.getAddOns();
 
