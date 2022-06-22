@@ -9,7 +9,7 @@ const addOnsSchema = mongoose.Schema(
       required: true,
     },
     increment: {
-      type: [Number],
+      type: Number,
     },
     fixedAllowance: {
       type: Number,
