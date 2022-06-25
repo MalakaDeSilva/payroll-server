@@ -6,7 +6,7 @@ const employeeSchema = mongoose.Schema(
 
     employeeId: {
       type: String,
-      required: true
+      required: true,
     },
     name: {
       type: String,
