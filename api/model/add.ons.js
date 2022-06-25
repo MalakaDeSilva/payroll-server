@@ -9,7 +9,7 @@ const addOnsSchema = mongoose.Schema(
       required: true,
     },
     increment: {
-      type: [Number],
+      type: Number,
     },
     fixedAllowance: {
       type: Number,
@@ -17,6 +17,10 @@ const addOnsSchema = mongoose.Schema(
     fromPayCycle: {
       type: String,
       required: true,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

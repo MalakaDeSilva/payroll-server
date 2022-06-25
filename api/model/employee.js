@@ -6,7 +6,7 @@ const employeeSchema = mongoose.Schema(
 
     employeeId: {
       type: String,
-      required: true
+      required: true,
     },
     name: {
       type: String,
@@ -28,10 +28,18 @@ const employeeSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    salary: {
+      type: Number,
+      required: true,
+    },
     status: {
       type: String,
       enum: ["resigned", "fired", "employed", "pending"],
       default: "employed",
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

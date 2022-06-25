@@ -19,6 +19,25 @@ function getAddOnsByEmployeeId(employeeId) {
     });
 }
 
+function getAddOnsByPayCycle(payCycle) {
+  let query = {
+    fromPayCycle: payCycle,
+  };
+
+  return AddOns.find(query)
+    .exec()
+    .then((doc) => {
+      if (doc) {
+        return doc;
+      } else {
+        return { message: "No valid entry found for the provided ID." };
+      }
+    })
+    .catch((err) => {
+      return { error: err };
+    });
+}
+
 function getAddOnsByEmployeeIdPayCycle(employeeId, fromPayCycle) {
   let query = {
     employeeId,
@@ -82,9 +101,20 @@ function createUpdateAddOns(addOn, employeeId) {
     });
 }
 
-/* function updateAddOns(addOn, employeeId) {
+function createAddOn(addOn) {
+  return addOn
+    .save()
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return { error: err };
+    });
+}
+
+function updateAddOns(addOn, id) {
   let query = {
-    employeeId,
+    _id: id,
   };
 
   return AddOns.findOneAndUpdate(query, addOn)
@@ -94,10 +124,29 @@ function createUpdateAddOns(addOn, employeeId) {
     .catch((err) => {
       return { error: err };
     });
-} */
+}
+
+function deleteAddOns(addOn, id) {
+  let query = {
+    _id: id,
+  };
+
+  return AddOns.findOneAndUpdate(query, addOn)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return { error: err };
+    });
+}
 
 module.exports = {
   getAddOnsByEmployeeId,
+  getAddOnsByEmployeeIdPayCycle,
+  getAddOnsByPayCycle,
   getAddOns,
   createUpdateAddOns,
+  createAddOn,
+  updateAddOns,
+  deleteAddOns,
 };

@@ -55,9 +55,24 @@ function updateEmployee(employee, id) {
     });
 }
 
+function deleteEmployee(employee, id) {
+  var query = {
+    _id: id,
+  };
+
+  return Employee.findOneAndUpdate(query, employee)
+    .then((employee) => {
+      return employee;
+    })
+    .catch((err) => {
+      return { error: err };
+    });
+}
+
 module.exports = {
   getEmployeeById,
   getEmployees,
   addEmployee,
   updateEmployee,
+  deleteEmployee
 };

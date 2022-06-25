@@ -12,8 +12,16 @@ const designationSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    payRange: {
-      type: String,
+    salaryRange: {
+      type: {
+        from: Number,
+        to: Number,
+      },
+      required: true,
+    },
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

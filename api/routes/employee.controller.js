@@ -32,6 +32,7 @@ router.post("/", async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,
+    salary: req.body.salary,
     NIC: req.body.nic,
     designation: req.body.designation,
   });
@@ -55,6 +56,7 @@ router.put("/:id", async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,
+    salary: req.body.salary,
     NIC: req.body.nic,
     designation: req.body.designation,
     status: req.body.status,
@@ -66,6 +68,23 @@ router.put("/:id", async (req, res, next) => {
   } else {
     res.status(200).json({
       updatedEmployee: result,
+    });
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  let _id = req.params.id;
+
+  var employee = new Employee({
+    isDeleted: true,
+  });
+
+  let result = await employeeService.updateEmployee(employee, _id);
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json({
+      deletedEmployee: result,
     });
   }
 });
