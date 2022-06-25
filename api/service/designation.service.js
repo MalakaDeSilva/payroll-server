@@ -59,9 +59,24 @@ function updateDesignation(designation, id) {
     });
 }
 
+function deleteDesignation(designation, id) {
+  var query = {
+    _id: id,
+  };
+
+  return Designation.findOneAndUpdate(query, designation)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return { error: err };
+    });
+}
+
 module.exports = {
   getDesignationByCode,
   getDesignations,
   addDesignation,
   updateDesignation,
+  deleteDesignation
 };

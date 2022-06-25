@@ -66,7 +66,21 @@ router.put("/", async (req, res, next) => {
     fromPayCycle: req.body.fromPayCycle,
   });
 
-  let result = await addOnsService.createUpdateAddOns(addOn, req.body.employeeId);
+  let result = await addOnsService.updateAddOns(addOn, req.body.id);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  var addOn = new AddOns({
+    isDeleted: true,
+  });
+
+  let result = await addOnsService.updateAddOns(addOn, req.params.id);
 
   if (typeof result["error"] != "undefined") {
     res.status(500).json(result);

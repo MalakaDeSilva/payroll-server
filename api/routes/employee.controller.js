@@ -70,4 +70,21 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  let _id = req.params.id;
+
+  var employee = new Employee({
+    isDeleted: true,
+  });
+
+  let result = await employeeService.updateEmployee(employee, _id);
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json({
+      deletedEmployee: result,
+    });
+  }
+});
+
 module.exports = router;

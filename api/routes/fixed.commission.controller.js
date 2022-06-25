@@ -71,4 +71,20 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  let id = req.params.id;
+
+  var commission = new Commission({
+    isDeleted: true,
+  });
+
+  let result = await commissionService.updateCommission(commission, id);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json({ deletedCommission: result });
+  }
+});
+
 module.exports = router;

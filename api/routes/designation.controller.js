@@ -66,4 +66,22 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+router.delete("/:id", async (req, res, next) => {
+  var designation = new Designation({
+    isDeleted: true,
+  });
+
+  let result = await designationService.updateDesignation(
+    designation,
+    req.params.id
+  );
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json({
+      deletedDesignation: result,
+    });
+  }
+});
+
 module.exports = router;

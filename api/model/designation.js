@@ -12,8 +12,9 @@ const designationSchema = mongoose.Schema(
       type: String,
       required: true,
     },
-    payRange: {
-      type: String,
+    isDeleted: {
+      type: Boolean,
+      default: false,
     },
   },
   { timestamps: true }

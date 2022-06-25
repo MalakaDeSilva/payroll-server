@@ -64,9 +64,24 @@ function updateCommission(commission, id) {
     });
 }
 
+function deleteCommission(commission, id) {
+  let query = {
+    _id: id,
+  };
+
+  return Commission.findOneAndUpdate(query, commission)
+    .then((result) => {
+      return result;
+    })
+    .catch((err) => {
+      return { error: err };
+    });
+}
+
 module.exports = {
   getCommissionByEmployeePayCycle,
   getCommissionsByPayCyle,
   addCommission,
   updateCommission,
+  deleteCommission
 };

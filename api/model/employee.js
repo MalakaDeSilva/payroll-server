@@ -33,6 +33,10 @@ const employeeSchema = mongoose.Schema(
       enum: ["resigned", "fired", "employed", "pending"],
       default: "employed",
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
   },
   { timestamps: true }
 );

@@ -82,9 +82,9 @@ function createUpdateAddOns(addOn, employeeId) {
     });
 }
 
-/* function updateAddOns(addOn, employeeId) {
+function deleteAddOns(addOn, id) {
   let query = {
-    employeeId,
+    _id: id,
   };
 
   return AddOns.findOneAndUpdate(query, addOn)
@@ -94,10 +94,11 @@ function createUpdateAddOns(addOn, employeeId) {
     .catch((err) => {
       return { error: err };
     });
-} */
+}
 
 module.exports = {
   getAddOnsByEmployeeId,
   getAddOns,
   createUpdateAddOns,
+  deleteAddOns,
 };
