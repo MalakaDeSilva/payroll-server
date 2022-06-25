@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:code", async (req, res, next) => {
   const desigCode = req.params.code;
   let result = await designationService.getDesignationByCode(desigCode);
-  
+
   if (typeof result["error"] != "undefined") {
     res.status(500).json(result);
   } else {
@@ -32,7 +32,10 @@ router.post("/", async (req, res, next) => {
     _id: new mongoose.Types.ObjectId(),
     designationCode: req.body.code,
     designationName: req.body.name,
-    payRange: req.body.payRange,
+    salaryRange: {
+      from: req.body.salFrom,
+      to: req.body.salTo,
+    },
   });
 
   let result = await designationService.addDesignation(designation);
@@ -50,7 +53,10 @@ router.put("/:id", async (req, res, next) => {
   var designation = new Designation({
     designationCode: req.body.code,
     designationName: req.body.name,
-    payRange: req.body.payRange,
+    salaryRange: {
+      from: req.body.salFrom,
+      to: req.body.salTo,
+    },
   });
 
   let result = await designationService.updateDesignation(

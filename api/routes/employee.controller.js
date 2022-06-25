@@ -32,6 +32,7 @@ router.post("/", async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,
+    salary: req.body.salary,
     NIC: req.body.nic,
     designation: req.body.designation,
   });
@@ -55,6 +56,7 @@ router.put("/:id", async (req, res, next) => {
     name: req.body.name,
     email: req.body.email,
     phone: req.body.phone,
+    salary: req.body.salary,
     NIC: req.body.nic,
     designation: req.body.designation,
     status: req.body.status,
