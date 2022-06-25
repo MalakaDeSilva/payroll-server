@@ -24,7 +24,6 @@ function getAddOnsByPayCycle(payCycle) {
     fromPayCycle: payCycle,
   };
 
-  console.log(query);
   return AddOns.find(query)
     .exec()
     .then((doc) => {
