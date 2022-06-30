@@ -1,7 +1,12 @@
 const Employee = require("../model/employee");
 
 function getEmployeeById(id) {
-  return Employee.findById(id)
+  var query = {
+    _id: id,
+    isDeleted: false,
+  };
+
+  return Employee.find(query)
     .exec()
     .then((doc) => {
       if (doc) {
@@ -16,7 +21,11 @@ function getEmployeeById(id) {
 }
 
 function getEmployees() {
-  return Employee.find()
+  var query = {
+    isDeleted: false,
+  };
+
+  return Employee.find(query)
     .exec()
     .then((doc) => {
       if (doc) {
