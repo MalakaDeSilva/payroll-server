@@ -55,7 +55,9 @@ function updateCommission(commission, id) {
     _id: id,
   };
 
-  return Commission.findOneAndUpdate(query, commission)
+  return Commission.findOneAndUpdate(query, commission, {
+    new: true,
+  })
     .then((result) => {
       return result;
     })
