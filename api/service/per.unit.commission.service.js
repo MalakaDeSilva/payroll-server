@@ -83,5 +83,5 @@ module.exports = {
   getCommissionsByPayCyle,
   addCommission,
   updateCommission,
-  deleteCommission
+  deleteCommission,
 };
