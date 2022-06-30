@@ -4,6 +4,7 @@ function getCommissionByEmployeePayCycle(employeeId, payCycle) {
   let query = {
     employeeId,
     payCycle,
+    isDeleted: false,
   };
 
   return Commission.find(query)
@@ -23,6 +24,7 @@ function getCommissionByEmployeePayCycle(employeeId, payCycle) {
 function getCommissionsByPayCyle(payCylce) {
   let query = {
     payCylce,
+    isDeleted: false,
   };
 
   return Commission.find(query)
