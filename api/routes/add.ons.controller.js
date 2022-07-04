@@ -21,7 +21,10 @@ router.get("/by-emp-pay-cycle/:empId/:payCycle", async (req, res, next) => {
   const empId = req.params.empId;
   const payCycle = req.params.payCycle;
 
-  let result = await addOnsService.getAddOnsByEmployeeIdPayCycle(empId, payCycle);
+  let result = await addOnsService.getAddOnsByEmployeeIdPayCycle(
+    empId,
+    payCycle
+  );
 
   if (typeof result["error"] != "undefined") {
     res.status(500).json(result);
