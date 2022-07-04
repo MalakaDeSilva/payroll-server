@@ -4,6 +4,7 @@ function getCommissionByEmployeePayCycle(employeeId, payCycle) {
   let query = {
     employeeId,
     payCycle,
+    isDeleted: false,
   };
 
   return Commission.find(query)
@@ -23,6 +24,7 @@ function getCommissionByEmployeePayCycle(employeeId, payCycle) {
 function getCommissionsByPayCyle(payCylce) {
   let query = {
     payCylce,
+    isDeleted: false,
   };
 
   return Commission.find(query)
@@ -55,7 +57,9 @@ function updateCommission(commission, id) {
     _id: id,
   };
 
-  return Commission.findOneAndUpdate(query, commission)
+  return Commission.findOneAndUpdate(query, commission, {
+    new: true,
+  })
     .then((result) => {
       return result;
     })
@@ -69,7 +73,9 @@ function deleteCommission(commission, id) {
     _id: id,
   };
 
-  return Commission.findOneAndUpdate(query, commission)
+  return Commission.findOneAndUpdate(query, commission, {
+    new: true,
+  })
     .then((result) => {
       return result;
     })
@@ -83,5 +89,5 @@ module.exports = {
   getCommissionsByPayCyle,
   addCommission,
   updateCommission,
-  deleteCommission
+  deleteCommission,
 };

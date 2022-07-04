@@ -50,7 +50,9 @@ function updateDesignation(designation, id) {
     _id: id,
   };
 
-  return Designation.findOneAndUpdate(query, designation)
+  return Designation.findOneAndUpdate(query, designation, {
+    new: true,
+  })
     .then((result) => {
       return result;
     })
@@ -64,7 +66,9 @@ function deleteDesignation(designation, id) {
     _id: id,
   };
 
-  return Designation.findOneAndUpdate(query, designation)
+  return Designation.findOneAndUpdate(query, designation, {
+    new: true,
+  })
     .then((result) => {
       return result;
     })
@@ -78,5 +82,5 @@ module.exports = {
   getDesignations,
   addDesignation,
   updateDesignation,
-  deleteDesignation
+  deleteDesignation,
 };

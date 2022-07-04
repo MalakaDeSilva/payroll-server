@@ -1,7 +1,12 @@
 const Employee = require("../model/employee");
 
 function getEmployeeById(id) {
-  return Employee.findById(id)
+  var query = {
+    _id: id,
+    isDeleted: false,
+  };
+
+  return Employee.find(query)
     .exec()
     .then((doc) => {
       if (doc) {
@@ -16,7 +21,11 @@ function getEmployeeById(id) {
 }
 
 function getEmployees() {
-  return Employee.find()
+  var query = {
+    isDeleted: false,
+  };
+
+  return Employee.find(query)
     .exec()
     .then((doc) => {
       if (doc) {
@@ -46,7 +55,9 @@ function updateEmployee(employee, id) {
     _id: id,
   };
 
-  return Employee.findOneAndUpdate(query, employee)
+  return Employee.findOneAndUpdate(query, employee, {
+    new: true,
+  })
     .then((employee) => {
       return employee;
     })
@@ -60,7 +71,9 @@ function deleteEmployee(employee, id) {
     _id: id,
   };
 
-  return Employee.findOneAndUpdate(query, employee)
+  return Employee.findOneAndUpdate(query, employee, {
+    new: true,
+  })
     .then((employee) => {
       return employee;
     })
@@ -74,5 +87,5 @@ module.exports = {
   getEmployees,
   addEmployee,
   updateEmployee,
-  deleteEmployee
+  deleteEmployee,
 };

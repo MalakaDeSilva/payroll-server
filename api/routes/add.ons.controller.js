@@ -21,7 +21,10 @@ router.get("/by-emp-pay-cycle/:empId/:payCycle", async (req, res, next) => {
   const empId = req.params.empId;
   const payCycle = req.params.payCycle;
 
-  let result = await addOnsService.getAddOnsByEmployeeIdPayCycle(empId, payCycle);
+  let result = await addOnsService.getAddOnsByEmployeeIdPayCycle(
+    empId,
+    payCycle
+  );
 
   if (typeof result["error"] != "undefined") {
     res.status(500).json(result);
@@ -66,11 +69,11 @@ router.post("/", async (req, res, next) => {
   if (typeof result["error"] != "undefined") {
     res.status(500).json(result);
   } else {
-    res.status(200).json(result);
+    res.status(200).json({ createdAddOn: result });
   }
 });
 
-router.put("/", async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   var addOn = new AddOns({
     employeeId: req.body.employeeId,
     increment: req.body.increment,
@@ -78,12 +81,12 @@ router.put("/", async (req, res, next) => {
     fromPayCycle: req.body.fromPayCycle,
   });
 
-  let result = await addOnsService.updateAddOns(addOn, req.body.id);
+  let result = await addOnsService.updateAddOns(addOn, req.params.id);
 
   if (typeof result["error"] != "undefined") {
     res.status(500).json(result);
   } else {
-    res.status(200).json(result);
+    res.status(200).json({ updatedAddOn: result });
   }
 });
 
@@ -97,7 +100,7 @@ router.delete("/:id", async (req, res, next) => {
   if (typeof result["error"] != "undefined") {
     res.status(500).json(result);
   } else {
-    res.status(200).json(result);
+    res.status(200).json({ deletedAddOn: result });
   }
 });
 
