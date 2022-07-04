@@ -3,7 +3,7 @@ const AddOns = require("../model/add.ons");
 function getAddOnsByEmployeeId(employeeId) {
   let query = {
     employeeId,
-    isDelete: false,
+    isDeleted: false,
   };
 
   return AddOns.find(query)
@@ -23,7 +23,7 @@ function getAddOnsByEmployeeId(employeeId) {
 function getAddOnsByPayCycle(payCycle) {
   let query = {
     fromPayCycle: payCycle,
-    isDelete: false,
+    isDeleted: false,
   };
 
   return AddOns.find(query)
@@ -44,7 +44,7 @@ function getAddOnsByEmployeeIdPayCycle(employeeId, fromPayCycle) {
   let query = {
     employeeId,
     fromPayCycle,
-    isDelete: false,
+    isDeleted: false,
   };
 
   return AddOns.find(query)
@@ -118,7 +118,7 @@ function createAddOn(addOn) {
 function updateAddOns(addOn, id) {
   let query = {
     _id: id,
-    isDelete: false,
+    isDeleted: false,
   };
 
   return AddOns.findOneAndUpdate(query, addOn, {
