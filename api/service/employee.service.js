@@ -71,7 +71,9 @@ function deleteEmployee(employee, id) {
     _id: id,
   };
 
-  return Employee.findOneAndUpdate(query, employee)
+  return Employee.findOneAndUpdate(query, employee, {
+    new: true,
+  })
     .then((employee) => {
       return employee;
     })
