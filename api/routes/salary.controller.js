@@ -7,6 +7,20 @@ const Util = require("../util/metadata.helper");
 
 const router = express.Router();
 
+router.get("/:id", async (req, res, next) => {
+  let query = {
+    _id: req.params.id,
+  };
+
+  let result = await salaryService.getSalaries(query);
+
+  if (typeof result["error"] != "undefined") {
+    res.status(500).json(result);
+  } else {
+    res.status(200).json(result);
+  }
+});
+
 router.get("/by-pay-cycle/:payCycle", async (req, res, next) => {
   let query = {
     payCycle: req.params.payCycle,
