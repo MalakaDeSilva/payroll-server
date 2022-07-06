@@ -53,9 +53,10 @@ const salarySchema = mongoose.Schema(
     netSalary: {
       type: Number,
     },
-    isPaid: {
-      type: Boolean,
-      default: false,
+    paid: {
+      type: String,
+      enum: ["pending", "paid", "cancelled"],
+      default: "pending",
     },
     isDeleted: {
       type: Boolean,
