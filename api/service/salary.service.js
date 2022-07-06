@@ -107,7 +107,7 @@ async function getSalaryData(metadata) {
     return {
       _id: item._id,
       commissionName: item.commissionName,
-      commission: item.amount
+      commission: item.amount,
     };
   });
 
@@ -122,7 +122,7 @@ async function getSalaryData(metadata) {
       _id: item._id,
       commissionName: item.commissionName,
       commission: item.amount,
-      units: item.units
+      units: item.units,
     };
   });
 
