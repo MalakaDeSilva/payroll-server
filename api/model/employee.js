@@ -16,6 +16,10 @@ const employeeSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    joinedDate: {
+      type: Date,
+      required: true,
+    },
     phone: {
       type: Number,
       required: true,
