@@ -90,8 +90,12 @@ async function getSalaryData(metadata) {
     metadata.payCycle
   );
 
-  salaryData["increment"] = result[0]["increment"];
-  salaryData["fixedAllowance"] = result[0]["fixedAllowance"];
+  salaryData["increment"] =
+    typeof result[0] == "undefined" ? 0 : result[0]["increment"];
+  salaryData["fixedAllowance"] =
+    typeof result[0] == "undefined"
+      ? 0
+      : result[0]["fixedAllowance"];
 
   // get fixed commissions
   result = await fixedCommissionsService.getCommissionByEmployeePayCycle(
