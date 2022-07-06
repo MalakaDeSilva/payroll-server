@@ -20,6 +20,26 @@ function getEmployeeById(id) {
     });
 }
 
+function getEmployeeByEmployeeId(empId) {
+  var query = {
+    employeeId: empId,
+    isDeleted: false,
+  };
+
+  return Employee.find(query)
+    .exec()
+    .then((doc) => {
+      if (doc) {
+        return doc;
+      } else {
+        return { message: "No valid entry found for the provided ID." };
+      }
+    })
+    .catch((err) => {
+      return { error: err };
+    });
+}
+
 function getEmployees() {
   var query = {
     isDeleted: false,
@@ -88,4 +108,5 @@ module.exports = {
   addEmployee,
   updateEmployee,
   deleteEmployee,
+  getEmployeeByEmployeeId,
 };

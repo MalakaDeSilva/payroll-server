@@ -3,6 +3,7 @@ const Designation = require("../model/designation");
 function getDesignationByCode(desgCode) {
   let query = {
     designationCode: desgCode,
+    isDeleted: false,
   };
 
   return Designation.find(query)
@@ -20,7 +21,11 @@ function getDesignationByCode(desgCode) {
 }
 
 function getDesignations() {
-  return Designation.find()
+  let query = {
+    isDeleted: false,
+  };
+
+  return Designation.find(query)
     .exec()
     .then((doc) => {
       if (doc) {
@@ -48,6 +53,7 @@ function addDesignation(designation) {
 function updateDesignation(designation, id) {
   var query = {
     _id: id,
+    isDeleted: false,
   };
 
   return Designation.findOneAndUpdate(query, designation, {
@@ -64,6 +70,7 @@ function updateDesignation(designation, id) {
 function deleteDesignation(designation, id) {
   var query = {
     _id: id,
+    isDeleted: false,
   };
 
   return Designation.findOneAndUpdate(query, designation, {
