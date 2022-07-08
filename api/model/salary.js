@@ -38,6 +38,7 @@ const salarySchema = mongoose.Schema(
           commissionName: String,
           commission: Number,
           units: Number,
+          totalCommission: Number,
         },
       ],
     },

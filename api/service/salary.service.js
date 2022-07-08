@@ -93,9 +93,7 @@ async function getSalaryData(metadata) {
   salaryData["increment"] =
     typeof result[0] == "undefined" ? 0 : result[0]["increment"];
   salaryData["fixedAllowance"] =
-    typeof result[0] == "undefined"
-      ? 0
-      : result[0]["fixedAllowance"];
+    typeof result[0] == "undefined" ? 0 : result[0]["fixedAllowance"];
 
   // get fixed commissions
   result = await fixedCommissionsService.getCommissionByEmployeePayCycle(
@@ -123,6 +121,7 @@ async function getSalaryData(metadata) {
       commissionName: item.commissionName,
       commission: item.amount,
       units: item.units,
+      totalCommission: item.units * item.amount,
     };
   });
 
