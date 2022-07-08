@@ -11,7 +11,7 @@ function getPayCycle(payCycle = "") {
     "JUL",
     "AUG",
     "SEP",
-    "OVT",
+    "OCT",
     "NOV",
     "DEC",
   ];

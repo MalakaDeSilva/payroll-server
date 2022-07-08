@@ -122,6 +122,7 @@ async function getSalaryData(metadata) {
       commissionName: item.commissionName,
       commission: item.amount,
       units: item.units,
+      totalCommission: item.units * item.amount,
     };
   });
 
@@ -155,7 +156,7 @@ function calculateSalary(salaryData) {
 async function generatePDF(id) {
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
-  await page.goto("http://127.0.0.1:8080/salary/slip/get/" + id, {
+  await page.goto(`${process.env.BASE_URL}/salary/slip/get/` + id, {
     waitUntil: "networkidle0",
   });
   const pdf = await page.pdf({ format: "A4" });
