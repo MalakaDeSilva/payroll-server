@@ -1,5 +1,6 @@
-const Salary = require("../model/salary");
+const puppeteer = require("puppeteer");
 
+const Salary = require("../model/salary");
 const employeeService = require("./employee.service");
 const addOnsService = require("./add.ons.service");
 const fixedCommissionsService = require("./fixed.commission.service");
@@ -152,6 +153,18 @@ function calculateSalary(salaryData) {
   };
 }
 
+async function generatePDF(id) {
+  const browser = await puppeteer.launch({ headless: true });
+  const page = await browser.newPage();
+  await page.goto("http://127.0.0.1:8080/salary/slip/get/" + id, {
+    waitUntil: "networkidle0",
+  });
+  const pdf = await page.pdf({ format: "A4" });
+
+  await browser.close();
+  return pdf;
+}
+
 module.exports = {
   getSalaries,
   saveSalary,
@@ -159,4 +172,5 @@ module.exports = {
   deleteSalary,
   getSalaryData,
   calculateSalary,
+  generatePDF,
 };
