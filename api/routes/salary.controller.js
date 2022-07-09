@@ -186,7 +186,7 @@ router.delete("/:id", async (req, res, next) => {
 
 router.get("/slip/get/:id", async (req, res, next) => {
   let file = fs.readFileSync(
-    path.resolve(__dirname, "../assets/pay-slip-template.html"),
+    path.resolve(__dirname, "../assets/_template.html"),
     "utf8"
   );
 
@@ -265,6 +265,17 @@ router.get("/slip/generate/:id", async (req, res, next) => {
 
   res.set({ "Content-Type": "application/pdf", "Content-Length": file.length });
   res.status(200).send(file);
+});
+
+router.get("/slip/temp/:id", async (req, res, next) => {
+  await salaryService._generatePdf(req.params.id, (_pdf) => {
+    res.set({
+      "Content-Type": "application/pdf",
+      "Content-Length": _pdf.length,
+    });
+    res.status(200).send(_pdf);
+  });
+  //
 });
 
 module.exports = router;

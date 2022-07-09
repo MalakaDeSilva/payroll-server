@@ -6,10 +6,6 @@
     <style>
       body {
         background: #f0f0f0;
-        width: 100vw;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
         padding: 20px;
         height: 100%;
       }
@@ -22,11 +18,12 @@
         color: #444;
       }
 
-      #payslip {
+      #payslip {/* 
         width: calc(8.5in - 80px);
-        height: calc(11in - 60px);
+        height: calc(11in - 60px); */
         background: #fff;
         padding: 30px 40px;
+        margin: auto;
       }
 
       #title {
@@ -39,8 +36,6 @@
         border-top: 1px solid #ccc;
         border-bottom: 1px solid #ccc;
         padding: 7px 0 4px 0;
-        display: flex;
-        justify-content: space-around;
       }
 
       #scope > .scope-entry {
@@ -53,9 +48,18 @@
       }
 
       .content {
-        display: flex;
         border-bottom: 1px solid #ccc;
         height: 880px;
+      }
+
+      .left-panel,
+      .right-panel {
+        float: left;
+        height: 100%;
+      }
+
+      .right-panel {
+        width: calc(100% - 240px) !important;
       }
 
       .content .left-panel {
@@ -93,8 +97,6 @@
       .details .entry,
       .contributions .entry,
       .ytd .entry {
-        display: flex;
-        justify-content: space-between;
         margin-bottom: 6px;
       }
 
@@ -127,7 +129,6 @@
       }
 
       .content .right-panel .details .entry {
-        display: flex;
         padding: 0 10px;
         margin: 6px 0;
       }
@@ -168,6 +169,32 @@
         background: rgba(0, 0, 0, 0.04);
       }
 
+      .label {
+        float: left;
+      }
+
+      .right-panel .label {
+        min-width: 90px;
+      }
+
+      .detail {
+        float: left;
+      }
+      .amount {
+        float: right;
+      }
+      .rate {
+        float: left;
+      }
+
+      .value {
+        float: right;
+      }
+
+      .scope-entry > .value {
+        float: initial;
+      }
+
       .border-net-pay {
         border: 1px solid #ccc;
       }
@@ -193,18 +220,22 @@
               <div class="label">Employee ID</div>
               <div class="value">$empId</div>
             </div>
+            <br />
             <div class="entry">
               <div class="label">Company Name</div>
               <div class="value">Picaroon Pvt. Ltd.</div>
             </div>
+            <br />
             <div class="entry">
               <div class="label">Date Hired</div>
               <div class="value">$joinedDate</div>
             </div>
+            <br />
             <div class="entry">
               <div class="label">Position</div>
               <div class="value">$designation</div>
             </div>
+            <br />
             <div class="entry">
               <div class="label">Payroll Cycle</div>
               <div class="value">Monthly</div>
@@ -223,45 +254,52 @@
             <div class="basic-pay">
               <div class="entry">
                 <div class="label">Basic Pay</div>
-                <div class="detail"></div>
+                <div class="detail">&nbsp;</div>
                 <div class="rate">$basic/Month</div>
                 <div class="amount">LKR $basic</div>
               </div>
             </div>
+            <br />
             <div class="salary">
               <div class="entry">
                 <div class="label">Earnings</div>
-                <div class="detail"></div>
+                <div class="detail">&nbsp;</div>
                 <div class="rate"></div>
                 <div class="amount"></div>
               </div>
+              <br />
               <div class="entry">
-                <div class="label"></div>
+                <div class="label">&nbsp;</div>
                 <div class="detail">Fixed Allowance</div>
                 <div class="rate"></div>
                 <div class="amount">LKR $fixedAllowance</div>
               </div>
+              <br />
               <div class="entry">
-                <div class="label"></div>
+                <div class="label">&nbsp;</div>
                 <div class="detail">Increment</div>
                 <div class="rate"></div>
                 <div class="amount">LKR $increment</div>
               </div>
+              <br />
               <div class="entry">
-                <div class="label"></div>
+                <div class="label">&nbsp;</div>
                 <div class="detail">Bonus</div>
                 <div class="rate"></div>
                 <div class="amount">LKR $bonus</div>
               </div>
+              <br />
               <div class="entry">
-                <div class="label"></div>
+                <div class="label">&nbsp;</div>
                 <div class="detail">Fixed Commissions</div>
                 <div class="rate"></div>
                 <div class="amount"></div>
               </div>
+              <br />
               <div class="entry">
-                <div class="label"></div>
-                <table style="width: 80%; text-align: right;">
+                <div class="label">&nbsp;</div>
+                <div class="detail">&nbsp;</div>
+                <table style="width: 80%; text-align: right">
                   <thead>
                     <th>Commission</th>
                     <th>Amount</th>
@@ -271,15 +309,18 @@
                   </tbody>
                 </table>
               </div>
+              <br />
               <div class="entry">
-                <div class="label"></div>
+                <div class="label">&nbsp;</div>
                 <div class="detail">Per Unit Commissions</div>
                 <div class="rate"></div>
                 <div class="amount"></div>
               </div>
+              <br />
               <div class="entry">
-                <div class="label"></div>
-                <table style="width: 80%; text-align: right;">
+                <div class="label">&nbsp;</div>
+                <div class="detail">&nbsp;</div>
+                <table style="width: 80%; text-align: right">
                   <thead>
                     <th>Commission</th>
                     <th>Units</th>
@@ -294,22 +335,24 @@
             <div class="deductions">
               <div class="entry">
                 <div class="label">Deductions</div>
-                <div class="detail"></div>
+                <div class="detail">&nbsp;</div>
                 <div class="rate"></div>
                 <div class="amount"></div>
               </div>
+              <br>
               <div class="entry">
-                <div class="label"></div>
+                <div class="label">&nbsp;</div>
                 <div class="detail">Reductions</div>
-                <div class="rate"></div>
+                <div class="rate">&nbsp;</div>
                 <div class="amount">LKR $reductions</div>
               </div>
             </div>
-            <hr clas="border-net-pay"></hr>
+            <br>
+            <hr clas="border-net-pay" />
             <div class="net_pay">
               <div class="entry">
                 <div class="label">NET PAY</div>
-                <div class="detail"></div>
+                <div class="detail">&nbsp;</div>
                 <div class="rate"></div>
                 <div class="amount">LKR $netPay</div>
               </div>

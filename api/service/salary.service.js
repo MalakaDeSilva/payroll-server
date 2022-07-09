@@ -1,10 +1,15 @@
 const puppeteer = require("puppeteer");
+const fs = require("fs");
+const pdf = require("html-pdf");
+const path = require("path");
 
 const Salary = require("../model/salary");
 const employeeService = require("./employee.service");
 const addOnsService = require("./add.ons.service");
 const fixedCommissionsService = require("./fixed.commission.service");
 const perUnitCommissionsService = require("./per.unit.commission.service");
+const designationService = require("./designation.service");
+const Util = require("../util/metadata.helper");
 
 function getSalaries(query) {
   query = {
@@ -164,6 +169,92 @@ async function generatePDF(id) {
   return pdf;
 }
 
+async function _generatePdf(id, callback) {
+  let file = fs.readFileSync(
+    path.resolve(__dirname, "../assets/_template.html"),
+    "utf8"
+  );
+  let options = { format: "Letter" };
+
+  let salary = await getSalaries({ _id: id });
+  let employee = await employeeService.getEmployeeByEmployeeId(
+    salary[0]["employeeId"]
+  );
+  let designation = await designationService.getDesignationByCode(
+    employee[0]["designation"]
+  );
+
+  const { year, month } = Util.getMonthYearFromPayCycle(salary[0]["payCycle"]);
+
+  file = file.replace("$month", month);
+  file = file.replace("$year", year);
+  file = file.replace("$name", employee[0]["name"]);
+  file = file.replace("$email", employee[0]["email"]);
+  file = file.replace("$empId", employee[0]["employeeId"]);
+  file = file.replace(
+    "$joinedDate",
+    new Date(employee[0]["joinedDate"]).toLocaleDateString()
+  );
+  file = file.replace("$designation", designation[0]["designationName"]);
+  file = file.replace("$grossSal", salary[0]["grossSalary"]);
+  file = file.replace("$basic", salary[0]["basic"]);
+  file = file.replace("$basic", salary[0]["basic"]);
+  file = file.replace("$grossSal", salary[0]["grossSalary"]);
+  file = file.replace("$fixedAllowance", salary[0]["fixedAllowance"]);
+  file = file.replace("$increment", salary[0]["increment"]);
+  file = file.replace("$bonus", salary[0]["bonus"]);
+
+  let fixedCommissions = "";
+  if (salary[0]["fixedCommissions"].length !== 0) {
+    salary[0]["fixedCommissions"].forEach((v) => {
+      fixedCommissions += `<tr>
+      <td>${v["commissionName"]}</td>
+      <td>LKR ${v["commission"]}</td>
+    <tr>`;
+    });
+  } else {
+    fixedCommissions += `<tr>
+    <td>-</td>
+    <td>-</td>
+  <tr>`;
+  }
+
+  file = file.replace("$fixedCommissions", fixedCommissions);
+
+  let perUnitCommissions = "";
+  if (salary[0]["perUnitCommissions"].length !== 0) {
+    salary[0]["perUnitCommissions"].forEach((v) => {
+      perUnitCommissions += `<tr>
+      <td>${v["commissionName"]}</td>
+      <td>${v["units"]}</td>
+      <td>LKR ${v["commission"]}</td>
+    <tr>`;
+    });
+  } else {
+    perUnitCommissions += `<tr>
+    <td>-</td>
+    <td>-</td>
+    <td>-</td>
+  <tr>`;
+  }
+
+  file = file.replace("$perUnitCommissions", perUnitCommissions);
+  file = file.replace("$reductions", salary[0]["reductions"]);
+  file = file.replace("$netPay", salary[0]["netSalary"]);
+
+  pdf.create(file, options).toBuffer(function (err, buffer) {
+    if (err) console.log(err);
+
+    callback(buffer);
+  });
+  /* .then((buffer) => {
+      return buffer;
+    })
+    .catch((err) => {
+      return err;
+    }); */
+}
+
 module.exports = {
   getSalaries,
   saveSalary,
@@ -172,4 +263,5 @@ module.exports = {
   getSalaryData,
   calculateSalary,
   generatePDF,
+  _generatePdf,
 };

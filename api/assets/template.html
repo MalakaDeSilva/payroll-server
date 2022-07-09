@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>New Document</title>
+    <style>
+      body {
+        background: #fff;
+        display: flex;
+        justify-content: center;
+        padding: 20px;
+        height: 100%;
+      }
+
+      @import url("https://fonts.googleapis.com/css?family=Roboto:200,300,400,600,700");
+
+      * {
+        font-family: "Roboto", sans-serif;
+        color: #444;
+      }
+
+      .text-align-center {
+        text-align: center;
+      }
+      .text-align-left {
+        text-align: left;
+      }
+      .text-align-right {
+        text-align: right;
+      }
+
+      #org-title {
+        margin-bottom: 20px;
+        font-size: 38px;
+        font-weight: 600;
+      }
+
+      .title {
+        border-top: 1px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        padding: 15px 0px;
+      }
+
+      .left-panel {
+        border-right: 1px solid #ccc;
+        min-width: 200px;
+        padding: 20px 16px 0 0;
+      }
+    </style>
+  </head>
+  <body>
+    <table width="100%" border="0">
+      <tr>
+        <td colspan="2">
+          <div id="org-title">Picaroon Pvt. Ltd</div>
+        </td>
+      </tr>
+      <tr>
+        <td colspan="2">
+          <div class="text-align-center title">
+            <div>PAYMENT PERIOD</div>
+            <div>$month of $year</div>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td width="25%" class="left-panel">
+          <table width="100%">
+            <tbody>
+              <tr>
+                <td colspan="2" class="text-align-center">$name</td>
+              </tr>
+              <tr>
+                <td colspan="2" class="text-align-center">$email</td>
+              </tr>
+              <tr>
+                <td class="text-align-left">Employee ID</td>
+                <td class="text-align-right">$empId</td>
+              </tr>
+              <tr>
+                <td class="text-align-left">Company Name</td>
+                <td class="text-align-right">Picaroon Pvt. Ltd.</td>
+              </tr>
+              <tr>
+                <td class="text-align-left">Date Hired</td>
+                <td class="text-align-right">$joinedDate</td>
+              </tr>
+              <tr>
+                <td class="text-align-left">Position</td>
+                <td class="text-align-right">$designation</td>
+              </tr>
+              <tr>
+                <td class="text-align-left">Payroll Cycle</td>
+                <td class="text-align-right">Monthly</td>
+              </tr>
+            </tbody>
+          </table>
+        </td>
+        <td width="75%">Technical and Managerial Tutorials</td>
+      </tr>
+    </table>
+  </body>
+</html>
