@@ -13,7 +13,7 @@ const perUnitCommissionRoutes = require("./api/routes/per.unit.commission.contro
 const addOnsRoutes = require("./api/routes/add.ons.controller");
 const salaryRoutes = require("./api/routes/salary.controller");
 
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT;
 mongoose.connect(process.env.URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
