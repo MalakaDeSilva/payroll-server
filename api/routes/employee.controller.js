@@ -30,6 +30,7 @@ router.post("/", async (req, res, next) => {
     _id: new mongoose.Types.ObjectId(),
     employeeId: req.body.employeeId,
     name: req.body.name,
+    dob: req.body.dob,
     email: req.body.email,
     joinedDate: req.body.date,
     phone: req.body.phone,
@@ -55,6 +56,7 @@ router.put("/:id", async (req, res, next) => {
   var employee = new Employee({
     employeeId: req.body.employeeId,
     name: req.body.name,
+    dob: req.body.dob,
     email: req.body.email,
     joinedDate: req.body.date,
     phone: req.body.phone,
