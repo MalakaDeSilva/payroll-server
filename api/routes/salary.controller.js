@@ -85,13 +85,6 @@ router.post("/", (req, res, next) => {
   });
 
   promise.then(async (value) => {
-    value = {
-      ...value,
-      bonus: typeof req.body.bonus == "undefined" ? 0 : req.body.bonus,
-      reductions:
-        typeof req.body.reductions == "undefined" ? 0 : req.body.reductions,
-    };
-
     calculatedSalary = salaryService.calculateSalary(value);
 
     var salary = new Salary({
@@ -104,8 +97,8 @@ router.post("/", (req, res, next) => {
       increment: value.increment,
       fixedCommissions: value.fixedCommissions,
       perUnitCommissions: value.perUnitCommissions,
-      bonus: req.body.bonus,
-      reductions: req.body.reductions,
+      bonus: value.bonus,
+      reductions: value.reductions,
       grossSalary: calculatedSalary.grossSalary,
       netSalary: calculatedSalary.netSalary,
       isPaid: req.body.isPaid,
@@ -135,13 +128,6 @@ router.put("/:id", async (req, res, next) => {
   });
 
   promise.then(async (value) => {
-    value = {
-      ...value,
-      bonus: typeof req.body.bonus == "undefined" ? 0 : req.body.bonus,
-      reductions:
-        typeof req.body.reductions == "undefined" ? 0 : req.body.reductions,
-    };
-
     calculatedSalary = salaryService.calculateSalary(value);
 
     var salary = new Salary({
@@ -153,8 +139,8 @@ router.put("/:id", async (req, res, next) => {
       increment: value.increment,
       fixedCommissions: value.fixedCommissions,
       perUnitCommissions: value.perUnitCommissions,
-      bonus: req.body.bonus,
-      reductions: req.body.reductions,
+      bonus: value.bonus,
+      reductions: value.reductions,
       grossSalary: calculatedSalary.grossSalary,
       netSalary: calculatedSalary.netSalary,
       isPaid: req.body.isPaid,
