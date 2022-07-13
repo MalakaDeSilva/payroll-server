@@ -61,6 +61,8 @@ router.post("/", async (req, res, next) => {
     employeeId: req.body.employeeId,
     increment: req.body.increment,
     fixedAllowance: req.body.fixedAllowance,
+    bonus: req.body.bonus,
+    reductions: req.body.reductions,
     fromPayCycle: req.body.fromPayCycle,
   });
 
@@ -78,6 +80,8 @@ router.put("/:id", async (req, res, next) => {
     employeeId: req.body.employeeId,
     increment: req.body.increment,
     fixedAllowance: req.body.fixedAllowance,
+    bonus: req.body.bonus,
+    reductions: req.body.reductions,
     fromPayCycle: req.body.fromPayCycle,
   });
 
