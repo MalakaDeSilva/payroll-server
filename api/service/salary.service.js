@@ -95,6 +95,10 @@ async function getSalaryData(metadata) {
     typeof result[0] == "undefined" ? 0 : result[0]["increment"];
   salaryData["fixedAllowance"] =
     typeof result[0] == "undefined" ? 0 : result[0]["fixedAllowance"];
+  salaryData["bonus"] =
+    typeof result[0] == "undefined" ? 0 : result[0]["bonus"];
+  salaryData["reductions"] =
+    typeof result[0] == "undefined" ? 0 : result[0]["reductions"];
 
   // get fixed commissions
   result = await fixedCommissionsService.getCommissionByEmployeePayCycle(
@@ -159,7 +163,6 @@ async function generatePDF(id) {
     args: ["--no-sandbox", "--disable-setuid-sandbox"],
   });
   const page = await browser.newPage();
-  console.log(`${process.env.BASE_URL}/salary/slip/get/`);
   await page.goto(`${process.env.BASE_URL}/salary/slip/get/` + id, {
     waitUntil: "networkidle0",
   });
