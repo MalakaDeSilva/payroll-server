@@ -143,7 +143,7 @@ router.put("/:id", async (req, res, next) => {
       reductions: value.reductions,
       grossSalary: calculatedSalary.grossSalary,
       netSalary: calculatedSalary.netSalary,
-      isPaid: req.body.isPaid,
+      paid: req.body.paid,
     });
 
     let result = await salaryService.updateSalary(salary, req.params.id);
