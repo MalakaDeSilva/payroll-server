@@ -10,7 +10,7 @@ router.get("/:id", async (req, res, next) => {
   const id = req.params.id;
   let result = await employeeService.getEmployeeById(id);
   if (result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -19,7 +19,7 @@ router.get("/:id", async (req, res, next) => {
 router.get("/", async (req, res, next) => {
   let result = await employeeService.getEmployees();
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -42,7 +42,7 @@ router.post("/", async (req, res, next) => {
   let result = await employeeService.addEmployee(employee);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({
       createdEmployee: result,
@@ -68,7 +68,7 @@ router.put("/:id", async (req, res, next) => {
 
   let result = await employeeService.updateEmployee(employee, _id);
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({
       updatedEmployee: result,
@@ -85,7 +85,7 @@ router.delete("/:id", async (req, res, next) => {
 
   let result = await employeeService.updateEmployee(employee, _id);
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({
       deletedEmployee: result,
