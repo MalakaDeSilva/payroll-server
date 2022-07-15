@@ -10,7 +10,7 @@ router.get("/", async (req, res, next) => {
   let result = await designationService.getDesignations();
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -21,7 +21,7 @@ router.get("/:code", async (req, res, next) => {
   let result = await designationService.getDesignationByCode(desigCode);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -41,7 +41,7 @@ router.post("/", async (req, res, next) => {
   let result = await designationService.addDesignation(designation);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({
       createdDesignation: result,
@@ -64,7 +64,7 @@ router.put("/:id", async (req, res, next) => {
     req.params.id
   );
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({
       updatedDesignation: result,
@@ -82,7 +82,7 @@ router.delete("/:id", async (req, res, next) => {
     req.params.id
   );
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({
       deletedDesignation: result,

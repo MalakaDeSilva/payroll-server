@@ -11,7 +11,7 @@ router.get("/by-emp/:empId", async (req, res, next) => {
   let result = await addOnsService.getAddOnsByEmployeeId(empId);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -27,7 +27,7 @@ router.get("/by-emp-pay-cycle/:empId/:payCycle", async (req, res, next) => {
   );
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -39,7 +39,7 @@ router.get("/by-pay-cycle/:payCycle", async (req, res, next) => {
   let result = await addOnsService.getAddOnsByPayCycle(payCycle);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -49,7 +49,7 @@ router.get("/", async (req, res, next) => {
   let result = await addOnsService.getAddOns();
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -70,7 +70,7 @@ router.post("/", async (req, res, next) => {
   let result = await addOnsService.createAddOn(addOn);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({ createdAddOn: result });
   }
@@ -90,7 +90,7 @@ router.put("/:id", async (req, res, next) => {
   let result = await addOnsService.updateAddOns(addOn, req.params.id);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({ updatedAddOn: result });
   }
@@ -104,7 +104,7 @@ router.delete("/:id", async (req, res, next) => {
   let result = await addOnsService.updateAddOns(addOn, req.params.id);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({ deletedAddOn: result });
   }

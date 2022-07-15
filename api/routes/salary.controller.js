@@ -19,7 +19,7 @@ router.get("/:id", async (req, res, next) => {
   let result = await salaryService.getSalaries(query);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -33,7 +33,7 @@ router.get("/by-pay-cycle/:payCycle", async (req, res, next) => {
   let result = await salaryService.getSalaries(query);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -47,7 +47,7 @@ router.get("/by-employee/:employeeId", async (req, res, next) => {
   let result = await salaryService.getSalaries(query);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -64,7 +64,7 @@ router.get(
     let result = await salaryService.getSalaries(query);
 
     if (typeof result["error"] != "undefined") {
-      res.status(500).json(result);
+      res.status(200).json(result);
     } else {
       res.status(200).json(result);
     }
@@ -107,7 +107,7 @@ router.post("/", (req, res, next) => {
     let result = await salaryService.saveSalary(salary);
 
     if (typeof result["error"] != "undefined") {
-      res.status(500).json(result);
+      res.status(200).json(result);
     } else {
       res.status(200).json({ createdSalary: result });
     }
@@ -149,7 +149,7 @@ router.put("/:id", async (req, res, next) => {
     let result = await salaryService.updateSalary(salary, req.params.id);
 
     if (typeof result["error"] != "undefined") {
-      res.status(500).json(result);
+      res.status(200).json(result);
     } else {
       res.status(200).json({ updatedSalary: result });
     }
@@ -164,7 +164,7 @@ router.delete("/:id", async (req, res, next) => {
   let result = await salaryService.deleteSalary(salary, req.params.id);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({ deletedSalary: result });
   }

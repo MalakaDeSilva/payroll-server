@@ -17,7 +17,7 @@ router.get("/:empId/:payCycle", async (req, res, next) => {
   );
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -28,7 +28,7 @@ router.get("/:payCycle", async (req, res, next) => {
   let result = await commissionService.getCommissionsByPayCyle(payCycle);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json(result);
   }
@@ -46,7 +46,7 @@ router.post("/", async (req, res, next) => {
   let result = await commissionService.addCommission(commission);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({ createdCommission: result });
   }
@@ -65,7 +65,7 @@ router.put("/:id", async (req, res, next) => {
   let result = await commissionService.updateCommission(commission, id);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({ updatedCommission: result });
   }
@@ -81,7 +81,7 @@ router.delete("/:id", async (req, res, next) => {
   let result = await commissionService.updateCommission(commission, id);
 
   if (typeof result["error"] != "undefined") {
-    res.status(500).json(result);
+    res.status(200).json(result);
   } else {
     res.status(200).json({ deletedCommission: result });
   }
