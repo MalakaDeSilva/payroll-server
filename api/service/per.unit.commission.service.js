@@ -1,29 +1,8 @@
 const Commission = require("../model/per.unit.commission");
 
-function getCommissionByEmployeePayCycle(employeeId, payCycle) {
-  let query = {
-    employeeId,
-    payCycle,
-    isDeleted: false,
-  };
-
-  return Commission.find(query)
-    .exec()
-    .then((doc) => {
-      if (doc) {
-        return doc;
-      } else {
-        return { message: "No valid entry found for the provided ID." };
-      }
-    })
-    .catch((err) => {
-      return { error: err };
-    });
-}
-
-function getCommissionsByPayCyle(payCylce) {
-  let query = {
-    payCylce,
+function getCommissions(query) {
+  query = {
+    ...query,
     isDeleted: false,
   };
 
@@ -85,8 +64,7 @@ function deleteCommission(commission, id) {
 }
 
 module.exports = {
-  getCommissionByEmployeePayCycle,
-  getCommissionsByPayCyle,
+  getCommissions,
   addCommission,
   updateCommission,
   deleteCommission,
