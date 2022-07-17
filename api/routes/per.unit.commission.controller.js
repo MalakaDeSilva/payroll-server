@@ -7,14 +7,8 @@ const Commission = require("../model/per.unit.commission");
 const metadataHelper = require("../util/metadata.helper");
 const commissionService = require("../service/per.unit.commission.service");
 
-router.get("/:empId/:payCycle", async (req, res, next) => {
-  const empId = req.params.empId;
-  const payCycle = req.params.payCycle;
-
-  let result = await commissionService.getCommissionByEmployeePayCycle(
-    empId,
-    payCycle
-  );
+router.get("/", async (req, res, next) => {
+  let result = await commissionService.getCommissions({});
 
   if (typeof result["error"] != "undefined") {
     res.status(200).json(result);
@@ -23,9 +17,33 @@ router.get("/:empId/:payCycle", async (req, res, next) => {
   }
 });
 
-router.get("/:payCycle", async (req, res, next) => {
+router.get("/by-emp-pc/:empId/:payCycle", async (req, res, next) => {
+  const employeeId = req.params.empId;
   const payCycle = req.params.payCycle;
-  let result = await commissionService.getCommissionsByPayCyle(payCycle);
+
+  let result = await commissionService.getCommissions({ employeeId, payCycle });
+
+  if (typeof result["error"] != "undefined") {
+    res.status(200).json(result);
+  } else {
+    res.status(200).json(result);
+  }
+});
+
+router.get("/by-pay-cycle/:payCycle", async (req, res, next) => {
+  const payCycle = req.params.payCycle;
+  let result = await commissionService.getCommissions({ payCycle });
+
+  if (typeof result["error"] != "undefined") {
+    res.status(200).json(result);
+  } else {
+    res.status(200).json(result);
+  }
+});
+
+router.get("/by-emp-id/:employeeId", async (req, res, next) => {
+  const employeeId = req.params.employeeId;
+  let result = await commissionService.getCommissions({ employeeId });
 
   if (typeof result["error"] != "undefined") {
     res.status(200).json(result);
