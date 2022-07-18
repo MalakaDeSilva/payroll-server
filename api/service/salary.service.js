@@ -101,10 +101,10 @@ async function getSalaryData(metadata) {
     typeof result[0] == "undefined" ? 0 : result[0]["reductions"];
 
   // get fixed commissions
-  result = await fixedCommissionsService.getCommissionByEmployeePayCycle(
-    metadata.empId,
-    metadata.payCycle
-  );
+  result = await fixedCommissionsService.getCommissions({
+    employeeId: metadata.empId,
+    payCycle: metadata.payCycle,
+  });
 
   salaryData["fixedCommissions"] = result.map((item) => {
     return {
@@ -115,10 +115,10 @@ async function getSalaryData(metadata) {
   });
 
   // get per unit commissions
-  result = await perUnitCommissionsService.getCommissionByEmployeePayCycle(
-    metadata.empId,
-    metadata.payCycle
-  );
+  result = await perUnitCommissionsService.getCommissions({
+    employeeId: metadata.empId,
+    payCycle: metadata.payCycle,
+  });
 
   salaryData["perUnitCommissions"] = result.map((item) => {
     return {
