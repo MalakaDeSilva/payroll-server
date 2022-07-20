@@ -9,7 +9,7 @@ const employeeService = require("../service/employee.service");
 router.get("/:id", async (req, res, next) => {
   const id = req.params.id;
   let result = await employeeService.getEmployeeById(id);
-  if (result["error"] != "undefined") {
+  if (typeof result["error"] != "undefined") {
     res.status(200).json(result);
   } else {
     res.status(200).json(result);
