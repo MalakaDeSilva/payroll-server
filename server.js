@@ -12,6 +12,8 @@ const fixedCommissionRoutes = require("./api/routes/fixed.commission.controller"
 const perUnitCommissionRoutes = require("./api/routes/per.unit.commission.controller");
 const addOnsRoutes = require("./api/routes/add.ons.controller");
 const salaryRoutes = require("./api/routes/salary.controller");
+const userRoutes = require("./api/routes/user.controller");
+const authRoutes = require("./api/routes/auth.controller");
 
 const PORT = process.env.PORT;
 mongoose.connect(process.env.URI, {
@@ -37,6 +39,8 @@ app.use("/fixed-commissions", fixedCommissionRoutes);
 app.use("/per-unit-commissions", perUnitCommissionRoutes);
 app.use("/add-ons", addOnsRoutes);
 app.use("/salary", salaryRoutes);
+app.use("/user", userRoutes);
+app.use("/auth", authRoutes);
 
 app.use((req, res, next) => {
   const error = new Error("Not found.");

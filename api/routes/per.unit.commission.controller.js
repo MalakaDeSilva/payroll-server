@@ -6,8 +6,9 @@ const router = express.Router();
 const Commission = require("../model/per.unit.commission");
 const metadataHelper = require("../util/metadata.helper");
 const commissionService = require("../service/per.unit.commission.service");
+const authService = require("../service/auth.service");
 
-router.get("/", async (req, res, next) => {
+router.get("/", authService.verifyToken, async (req, res, next) => {
   let result = await commissionService.getCommissions({});
 
   if (typeof result["error"] != "undefined") {
@@ -17,42 +18,57 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/by-emp-pc/:empId/:payCycle", async (req, res, next) => {
-  const employeeId = req.params.empId;
-  const payCycle = req.params.payCycle;
+router.get(
+  "/by-emp-pc/:empId/:payCycle",
+  authService.verifyToken,
+  async (req, res, next) => {
+    const employeeId = req.params.empId;
+    const payCycle = req.params.payCycle;
 
-  let result = await commissionService.getCommissions({ employeeId, payCycle });
+    let result = await commissionService.getCommissions({
+      employeeId,
+      payCycle,
+    });
 
-  if (typeof result["error"] != "undefined") {
-    res.status(200).json(result);
-  } else {
-    res.status(200).json(result);
+    if (typeof result["error"] != "undefined") {
+      res.status(200).json(result);
+    } else {
+      res.status(200).json(result);
+    }
   }
-});
+);
 
-router.get("/by-pay-cycle/:payCycle", async (req, res, next) => {
-  const payCycle = req.params.payCycle;
-  let result = await commissionService.getCommissions({ payCycle });
+router.get(
+  "/by-pay-cycle/:payCycle",
+  authService.verifyToken,
+  async (req, res, next) => {
+    const payCycle = req.params.payCycle;
+    let result = await commissionService.getCommissions({ payCycle });
 
-  if (typeof result["error"] != "undefined") {
-    res.status(200).json(result);
-  } else {
-    res.status(200).json(result);
+    if (typeof result["error"] != "undefined") {
+      res.status(200).json(result);
+    } else {
+      res.status(200).json(result);
+    }
   }
-});
+);
 
-router.get("/by-emp-id/:employeeId", async (req, res, next) => {
-  const employeeId = req.params.employeeId;
-  let result = await commissionService.getCommissions({ employeeId });
+router.get(
+  "/by-emp-id/:employeeId",
+  authService.verifyToken,
+  async (req, res, next) => {
+    const employeeId = req.params.employeeId;
+    let result = await commissionService.getCommissions({ employeeId });
 
-  if (typeof result["error"] != "undefined") {
-    res.status(200).json(result);
-  } else {
-    res.status(200).json(result);
+    if (typeof result["error"] != "undefined") {
+      res.status(200).json(result);
+    } else {
+      res.status(200).json(result);
+    }
   }
-});
+);
 
-router.post("/", async (req, res, next) => {
+router.post("/", authService.verifyToken, async (req, res, next) => {
   var commission = new Commission({
     _id: new mongoose.Types.ObjectId(),
     commissionName: req.body.name,
@@ -71,7 +87,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", authService.verifyToken, async (req, res, next) => {
   let id = req.params.id;
 
   var commission = new Commission({
@@ -91,7 +107,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", authService.verifyToken, async (req, res, next) => {
   let id = req.params.id;
 
   var commission = new Commission({

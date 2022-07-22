@@ -7,11 +7,12 @@ const Salary = require("../model/salary");
 const salaryService = require("../service/salary.service");
 const employeeService = require("../service/employee.service");
 const designationService = require("../service/designation.service");
+const authService = require("../service/auth.service");
 const Util = require("../util/metadata.helper");
 
 const router = express.Router();
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", authService.verifyToken, async (req, res, next) => {
   let query = {
     _id: req.params.id,
   };
@@ -25,36 +26,45 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/by-pay-cycle/:payCycle", async (req, res, next) => {
-  let query = {
-    payCycle: req.params.payCycle,
-  };
+router.get(
+  "/by-pay-cycle/:payCycle",
+  authService.verifyToken,
+  async (req, res, next) => {
+    let query = {
+      payCycle: req.params.payCycle,
+    };
 
-  let result = await salaryService.getSalaries(query);
+    let result = await salaryService.getSalaries(query);
 
-  if (typeof result["error"] != "undefined") {
-    res.status(200).json(result);
-  } else {
-    res.status(200).json(result);
+    if (typeof result["error"] != "undefined") {
+      res.status(200).json(result);
+    } else {
+      res.status(200).json(result);
+    }
   }
-});
+);
 
-router.get("/by-employee/:employeeId", async (req, res, next) => {
-  let query = {
-    employeeId: req.params.employeeId,
-  };
+router.get(
+  "/by-employee/:employeeId",
+  authService.verifyToken,
+  async (req, res, next) => {
+    let query = {
+      employeeId: req.params.employeeId,
+    };
 
-  let result = await salaryService.getSalaries(query);
+    let result = await salaryService.getSalaries(query);
 
-  if (typeof result["error"] != "undefined") {
-    res.status(200).json(result);
-  } else {
-    res.status(200).json(result);
+    if (typeof result["error"] != "undefined") {
+      res.status(200).json(result);
+    } else {
+      res.status(200).json(result);
+    }
   }
-});
+);
 
 router.get(
   "/by-employee-pay-cycle/:employeeId/:payCycle",
+  authService.verifyToken,
   async (req, res, next) => {
     let query = {
       employeeId: req.params.employeeId,
@@ -71,7 +81,7 @@ router.get(
   }
 );
 
-router.post("/", (req, res, next) => {
+router.post("/", authService.verifyToken, (req, res, next) => {
   let calculatedSalary = 0;
 
   let promise = new Promise((resolve, reject) => {
@@ -114,7 +124,7 @@ router.post("/", (req, res, next) => {
   });
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", authService.verifyToken, async (req, res, next) => {
   let calculatedSalary = 0;
 
   let promise = new Promise((resolve, reject) => {
@@ -156,7 +166,7 @@ router.put("/:id", async (req, res, next) => {
   });
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", authService.verifyToken, async (req, res, next) => {
   let salary = new Salary({
     isDeleted: true,
   });
