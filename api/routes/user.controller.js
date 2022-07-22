@@ -16,8 +16,7 @@ router.get("/get-user/:email", async (req, res, next) => {
   if (typeof result["error"] != "undefined") {
     res.status(200).json(result);
   } else {
-    console.log(result);
-    if (typeof result.length === 1) {
+    if (result.length === 1) {
       res.status(200).json(result[0]);
     } else {
       res.status(200).json({ error: "No user found." });
