@@ -7,58 +7,46 @@ const AddOns = require("../model/add.ons");
 const addOnsService = require("../service/add.ons.service");
 const authService = require("../service/auth.service");
 
-router.get(
-  "/by-emp/:empId",
-  authService.verifyToken,
-  async (req, res, next) => {
-    const empId = req.params.empId;
-    let result = await addOnsService.getAddOnsByEmployeeId(empId);
+router.get("/by-emp/:empId", async (req, res, next) => {
+  const empId = req.params.empId;
+  let result = await addOnsService.getAddOnsByEmployeeId(empId);
 
-    if (typeof result["error"] != "undefined") {
-      res.status(200).json(result);
-    } else {
-      res.status(200).json(result);
-    }
+  if (typeof result["error"] != "undefined") {
+    res.status(200).json(result);
+  } else {
+    res.status(200).json(result);
   }
-);
+});
 
-router.get(
-  "/by-emp-pay-cycle/:empId/:payCycle",
-  authService.verifyToken,
-  async (req, res, next) => {
-    const empId = req.params.empId;
-    const payCycle = req.params.payCycle;
+router.get("/by-emp-pay-cycle/:empId/:payCycle", async (req, res, next) => {
+  const empId = req.params.empId;
+  const payCycle = req.params.payCycle;
 
-    let result = await addOnsService.getAddOnsByEmployeeIdPayCycle(
-      empId,
-      payCycle
-    );
+  let result = await addOnsService.getAddOnsByEmployeeIdPayCycle(
+    empId,
+    payCycle
+  );
 
-    if (typeof result["error"] != "undefined") {
-      res.status(200).json(result);
-    } else {
-      res.status(200).json(result);
-    }
+  if (typeof result["error"] != "undefined") {
+    res.status(200).json(result);
+  } else {
+    res.status(200).json(result);
   }
-);
+});
 
-router.get(
-  "/by-pay-cycle/:payCycle",
-  authService.verifyToken,
-  async (req, res, next) => {
-    const payCycle = req.params.payCycle;
+router.get("/by-pay-cycle/:payCycle", async (req, res, next) => {
+  const payCycle = req.params.payCycle;
 
-    let result = await addOnsService.getAddOnsByPayCycle(payCycle);
+  let result = await addOnsService.getAddOnsByPayCycle(payCycle);
 
-    if (typeof result["error"] != "undefined") {
-      res.status(200).json(result);
-    } else {
-      res.status(200).json(result);
-    }
+  if (typeof result["error"] != "undefined") {
+    res.status(200).json(result);
+  } else {
+    res.status(200).json(result);
   }
-);
+});
 
-router.get("/", authService.verifyToken, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   let result = await addOnsService.getAddOns();
 
   if (typeof result["error"] != "undefined") {
@@ -68,7 +56,7 @@ router.get("/", authService.verifyToken, async (req, res, next) => {
   }
 });
 
-router.post("/", authService.verifyToken, async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   var addOn = new AddOns({
     _id: new mongoose.Types.ObjectId(),
     employeeId: req.body.employeeId,
@@ -89,7 +77,7 @@ router.post("/", authService.verifyToken, async (req, res, next) => {
   }
 });
 
-router.put("/:id", authService.verifyToken, async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   var addOn = new AddOns({
     employeeId: req.body.employeeId,
     increment: req.body.increment,
@@ -109,7 +97,7 @@ router.put("/:id", authService.verifyToken, async (req, res, next) => {
   }
 });
 
-router.delete("/:id", authService.verifyToken, async (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   var addOn = new AddOns({
     isDeleted: true,
   });
