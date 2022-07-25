@@ -46,7 +46,10 @@ router.put("/update-password", async (req, res, next) => {
   if (typeof existingUser[0]["error"] != "undefined") {
     res.status(200).json({ error: "No existing user." });
   } else {
-    let match = await bcrypt.compare(req.body.oldPassword, existingUser[0].password);
+    let match = await bcrypt.compare(
+      req.body.oldPassword,
+      existingUser[0].password
+    );
 
     if (match) {
       let hash = await bcrypt.hash(req.body.password, saltRounds);
