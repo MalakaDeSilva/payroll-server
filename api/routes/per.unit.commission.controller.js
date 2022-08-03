@@ -8,7 +8,7 @@ const metadataHelper = require("../util/metadata.helper");
 const commissionService = require("../service/per.unit.commission.service");
 const authService = require("../service/auth.service");
 
-router.get("/", async (req, res, next) => {
+router.get("/", authService.verifyToken, async (req, res, next) => {
   let result = await commissionService.getCommissions({});
 
   if (typeof result["error"] != "undefined") {
@@ -68,7 +68,7 @@ router.get(
   }
 );
 
-router.post("/", async (req, res, next) => {
+router.post("/", authService.verifyToken, async (req, res, next) => {
   var commission = new Commission({
     _id: new mongoose.Types.ObjectId(),
     commissionName: req.body.name,
@@ -87,7 +87,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", authService.verifyToken, async (req, res, next) => {
   let id = req.params.id;
 
   var commission = new Commission({
@@ -107,7 +107,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", authService.verifyToken, async (req, res, next) => {
   let id = req.params.id;
 
   var commission = new Commission({

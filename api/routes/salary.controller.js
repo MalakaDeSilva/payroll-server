@@ -12,7 +12,7 @@ const Util = require("../util/metadata.helper");
 
 const router = express.Router();
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", authService.verifyToken, async (req, res, next) => {
   let query = {
     _id: req.params.id,
   };
@@ -28,7 +28,7 @@ router.get("/:id", async (req, res, next) => {
 
 router.get(
   "/by-pay-cycle/:payCycle",
- 
+  authService.verifyToken,
   async (req, res, next) => {
     let query = {
       payCycle: req.params.payCycle,
@@ -46,7 +46,7 @@ router.get(
 
 router.get(
   "/by-employee/:employeeId",
- 
+  authService.verifyToken,
   async (req, res, next) => {
     let query = {
       employeeId: req.params.employeeId,
@@ -64,7 +64,7 @@ router.get(
 
 router.get(
   "/by-employee-pay-cycle/:employeeId/:payCycle",
- 
+  authService.verifyToken,
   async (req, res, next) => {
     let query = {
       employeeId: req.params.employeeId,
@@ -81,7 +81,7 @@ router.get(
   }
 );
 
-router.post("/", (req, res, next) => {
+router.post("/", authService.verifyToken, (req, res, next) => {
   let calculatedSalary = 0;
 
   let promise = new Promise((resolve, reject) => {
@@ -124,7 +124,7 @@ router.post("/", (req, res, next) => {
   });
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", authService.verifyToken, async (req, res, next) => {
   let calculatedSalary = 0;
 
   let promise = new Promise((resolve, reject) => {
@@ -166,7 +166,7 @@ router.put("/:id", async (req, res, next) => {
   });
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", authService.verifyToken, async (req, res, next) => {
   let salary = new Salary({
     isDeleted: true,
   });

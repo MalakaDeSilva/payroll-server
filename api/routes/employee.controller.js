@@ -7,7 +7,7 @@ const Employee = require("../model/employee");
 const employeeService = require("../service/employee.service");
 const authService = require("../service/auth.service");
 
-router.get("/:id", async (req, res, next) => {
+router.get("/:id", authService.verifyToken, async (req, res, next) => {
   const id = req.params.id;
   let result = await employeeService.getEmployeeById(id);
   if (typeof result["error"] != "undefined") {
@@ -17,7 +17,7 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.get("/", async (req, res, next) => {
+router.get("/", authService.verifyToken, async (req, res, next) => {
   let result = await employeeService.getEmployees();
   if (typeof result["error"] != "undefined") {
     res.status(200).json(result);
@@ -26,7 +26,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", authService.verifyToken, async (req, res, next) => {
   var employee = new Employee({
     _id: new mongoose.Types.ObjectId(),
     employeeId: req.body.employeeId,
@@ -51,7 +51,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", authService.verifyToken, async (req, res, next) => {
   let _id = req.params.id;
 
   var employee = new Employee({
@@ -77,7 +77,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", authService.verifyToken, async (req, res, next) => {
   let _id = req.params.id;
 
   var employee = new Employee({
