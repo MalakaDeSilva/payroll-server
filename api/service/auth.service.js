@@ -51,6 +51,17 @@ function verifyToken(req, res, next) {
   }
 }
 
+function checkTokenValidity(token) {
+  const { privateKey } = process.env;
+
+  try {
+    let result = jwt.verify(token, privateKey);
+    return { verified: true, result };
+  } catch (e) {
+    return { verified: false, error: e };
+  }
+}
+
 function logout(bearerHeader) {
   //const bearerHeader = req.headers["authorization"];
   if (typeof bearerHeader !== "undefined") {
@@ -63,4 +74,5 @@ module.exports = {
   login,
   logout,
   verifyToken,
+  checkTokenValidity,
 };

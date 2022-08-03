@@ -14,4 +14,26 @@ router.post("/login", async (req, res, next) => {
   }
 });
 
+router.post("/verify", (req, res, next) => {
+  const bearerHeader = req.headers["authorization"];
+  if (typeof bearerHeader !== "undefined") {
+    const bearerToken = bearerHeader.split(" ")[1];
+
+    let result = authService.checkTokenValidity(bearerToken);
+    if (result["verified"]) {
+      res.status(200).json({ ...result });
+    } else {
+      res.status(403).json({ ...result });
+    }
+  } else {
+    res.status(403).json({
+      verified: false,
+      error: {
+        name: "JsonWebTokenError",
+        message: "empty token",
+      },
+    });
+  }
+});
+
 module.exports = router;
