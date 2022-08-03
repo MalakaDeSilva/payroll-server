@@ -7,7 +7,7 @@ const Designation = require("../model/designation");
 const designationService = require("../service/designation.service");
 const authService = require("../service/auth.service");
 
-router.get("/", async (req, res, next) => {
+router.get("/", authService.verifyToken, async (req, res, next) => {
   let result = await designationService.getDesignations();
 
   if (typeof result["error"] != "undefined") {
@@ -17,7 +17,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:code", async (req, res, next) => {
+router.get("/:code", authService.verifyToken, async (req, res, next) => {
   const desigCode = req.params.code;
   let result = await designationService.getDesignationByCode(desigCode);
 
@@ -28,7 +28,7 @@ router.get("/:code", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post("/", authService.verifyToken, async (req, res, next) => {
   var designation = new Designation({
     _id: new mongoose.Types.ObjectId(),
     designationCode: req.body.code,
@@ -50,7 +50,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put("/:id", authService.verifyToken, async (req, res, next) => {
   var designation = new Designation({
     designationCode: req.body.code,
     designationName: req.body.name,
@@ -73,7 +73,7 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete("/:id", authService.verifyToken, async (req, res, next) => {
   var designation = new Designation({
     isDeleted: true,
   });
