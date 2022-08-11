@@ -16,9 +16,18 @@ const userSchema = mongoose.Schema(
       type: String,
       required: true,
     },
+    role: {
+      type: String,
+      default: "employee",
+      enum: ["admin", "employee"],
+    },
     isResigned: {
       type: Boolean,
       default: false,
+    },
+    isFirstTime: {
+      type: Boolean,
+      default: true,
     },
   },
   { timestamps: true }

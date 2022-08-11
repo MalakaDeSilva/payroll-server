@@ -1,11 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
 
 const router = express.Router();
 
 const Employee = require("../model/employee");
+const User = require("../model/user");
 const employeeService = require("../service/employee.service");
 const authService = require("../service/auth.service");
+const userService = require("../service/user.service");
+
+const saltRounds = 10;
 
 router.get("/:id", authService.verifyToken, async (req, res, next) => {
   const id = req.params.id;
@@ -39,6 +44,19 @@ router.post("/", authService.verifyToken, async (req, res, next) => {
     NIC: req.body.nic,
     designation: req.body.designation,
   });
+
+  let hash = await bcrypt.hash(req.body.employeeId, saltRounds);
+  let user = new User({
+    _id: new mongoose.Types.ObjectId(),
+    userId: req.body.employeeId,
+    email: req.body.email,
+    password: hash,
+    role: req.body.role,
+  });
+
+  try {
+    await userService.addUser(user);
+  } catch (error) {}
 
   let result = await employeeService.addEmployee(employee);
 

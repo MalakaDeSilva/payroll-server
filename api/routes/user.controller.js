@@ -56,6 +56,7 @@ router.put("/update-password", async (req, res, next) => {
 
       let user = new User({
         password: hash,
+        isFirstTime: false,
       });
 
       let result = await userService.updatePassword(user, req.body.email);

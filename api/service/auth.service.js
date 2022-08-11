@@ -12,9 +12,13 @@ async function login(email, password) {
       if (user.length !== 0) {
         let match = await bcrypt.compare(password, user[0].password);
         if (email === user[0].email && match) {
-          token = await jwt.sign({ email: email }, process.env.privateKey, {
-            expiresIn: "1h",
-          });
+          token = await jwt.sign(
+            { email: email, role: user[0].role },
+            process.env.privateKey,
+            {
+              expiresIn: "1h",
+            }
+          );
         }
       } else {
         return { error: "Invalid email address." };
@@ -26,7 +30,6 @@ async function login(email, password) {
       return { error: "Email/Password is incorrect." };
     }
   } catch (err) {
-    console.log(err);
     return { error: err };
   }
 }
@@ -40,7 +43,7 @@ function verifyToken(req, res, next) {
     const bearerToken = bearerHeader.split(" ")[1];
     jwt.verify(bearerToken, privateKey, function (err, data) {
       if (!(err && typeof data === "undefined")) {
-        req.user = { email: data.email, verified: true };
+        req.user = { email: data.email, role: data.role, verified: true };
         next();
       } else {
         return res.sendStatus(403);
